@@ -1,25 +1,19 @@
+import argparse
 import json
 import time
 import datetime
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-import requests
-# from selenium.webdriver.support import expected_conditions as EC, wait
-
-username = 'z8468426'
-password = 'jiang717900150'
-longitude = '117.242693'
-latitude = '29.320587'
-max_attempts = 5
-SCKEY = "SCT115169TieTo42L8L9elY5Q7RiAujYJF"
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def driver():
     options = webdriver.ChromeOptions()
-    # options.add_argument('headless')
+    options.add_argument('headless')
     options.add_argument('disable-gpu')
-    service = Service(executable_path='d:/chrome_driver/chromedriver.exe')
+    service = Service(executable_path=ChromeDriverManager(log_level=0).install())
     browser = webdriver.Chrome(service=service, options=options)
     return browser
 
@@ -32,7 +26,6 @@ def login(browser, username, password, el_user, el_pwd, el_btn):
     password_input.send_keys(password)
     login_button.click()
     time.sleep(5)
-    # wait.WebDriverWait(browser, 5).until(EC.title_contains('个人中心'))
 
 
 def report(browser, longitude, latitude, el_in, el_loc, el_sub, el_con):
@@ -56,7 +49,6 @@ window.navigator.geolocation.getCurrentPosition = function (success) {{
     location_button.click()
     time.sleep(2)
 
-    # wait.WebDriverWait(browser, 5).until(lambda _: location_button.get_attribute('value'))
     submit_button = browser.find_element(By.XPATH, el_sub)
     submit_button.click()
     try:
@@ -67,8 +59,6 @@ window.navigator.geolocation.getCurrentPosition = function (success) {{
     except Exception as e:
         msg = str(datetime.date.today()) + ' 健康打卡失败\n' + str(e)
     return msg
-    # wait.WebDriverWait(browser, 5).until(EC.visibility_of_element_located([By.XPATH, el_con]))
-    # wait.WebDriverWait(browser, 5).until_not(EC.element_to_be_clickable(submit_button))
 
 
 def msg2wechat(msg):
@@ -77,17 +67,25 @@ def msg2wechat(msg):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='My health-report automatic program.')
+    parser.add_argument('--username', '-u', type=str, help='username')
+    parser.add_argument('--password', '-p', type=str, help='password')
+    parser.add_argument('--longitude', '-o', type=float, help='longitude')
+    parser.add_argument('--latitude', '-a', type=float, help='latitude')
+    parser.add_argument('--SKY', '-s', type=str, help='KEY used to send message to wechat.')
+    opt = parser.parse_args()
+
     with open('meta.json', 'r') as fp:
         meta = json.load(fp)
-    print('meta data is: ', meta)
 
-    attempts = 0
-    while attempts <= max_attempts:
-        attempts += 1
-        print('-' * 20 + f'the {attempts:3} th attempt' + '-' * 20)
+    attempt = 0
+
+    while attempt <= max_attempts:
+        attempt += 1
+        print('-' * 20 + f'the {attempt:3} th attempt' + '-' * 20)
 
         browser = driver()
-        browser.implicitly_wait(30)
+        browser.implicitly_wait(30)  # 隐式等待，检索每个元素都会最多等待的时间
 
         print('open login page...')
         browser.get(meta['url']['login'])
