@@ -6,7 +6,7 @@ name: auto report script
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 9,10,11 * * *"
+    - cron: "0 8,9,10 * * *"
 
 jobs:
   report:
