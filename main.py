@@ -62,7 +62,7 @@ window.navigator.geolocation.getCurrentPosition = function (success) {{
     return msg
 
 
-def msg2wechat(msg):
+def msg2wechat(msg, SCKEY):
     payload = {'text': msg}
     requests.get(f"https://sc.ftqq.com/{SCKEY}.send", params=payload)
 
@@ -76,6 +76,7 @@ if __name__ == "__main__":
     parser.add_argument('--SKY', '-s', type=str, help='KEY used to send message to wechat.')
     opt = parser.parse_args()
 
+    print('options are: ', opt)
     with open('meta.json', 'r') as fp:
         meta = json.load(fp)
 
@@ -96,8 +97,8 @@ if __name__ == "__main__":
         print('login into system...')
         login(
             browser,
-            username,
-            password,
+            opt.username,
+            opt.password,
             meta['el']['username_input'],
             meta['el']['password_input'],
             meta['el']['login_btn'],
@@ -112,8 +113,8 @@ if __name__ == "__main__":
         print('start reporting...')
         message = report(
             browser,
-            longitude,
-            latitude,
+            opt.longitude,
+            opt.latitude,
             meta['el']['in_school_button'],
             meta['el']['location_button'],
             meta['el']['submit_button'],
@@ -123,7 +124,7 @@ if __name__ == "__main__":
 
         break
 
-    msg2wechat(message)
+    msg2wechat(message, opt.SKY)
     print('message has been sent to wechat!')
     browser.quit()
     print('task finished successfully!')
