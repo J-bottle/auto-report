@@ -7,10 +7,10 @@
     "username_input": "//*[@id=\"app\"]/div[2]/div[1]/input",
     "password_input": "//*[@id=\"app\"]/div[2]/div[2]/input",
     "login_btn": "//*[@id=\"app\"]/div[3]",
-    "in_school_button": "/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/span[1]",
+    "not_in_school_button": "/html/body/div[1]/div[1]/div/div[2]/div[1]/div[2]/div[2]/span[1]",
+    "in_school_button": "/html/body/div[1]/div[1]/div/div[2]/div/div[2]/div[1]/span[1]",
     "location_button": "/html/body/div[1]/div[1]/div/div[5]/div/div[2]/div[2]/div[2]/input",
     "submit_button": "/html/body/div[1]/div[1]/div/div[6]/a",
     "confirm_button": "//*[@id=\"wapcf\"]/div/div[2]/div[2]"
   }
 }
-
