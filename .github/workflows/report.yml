@@ -5,7 +5,7 @@ name: Auto report script
 
 on:
   schedule:
-    - cron: "0 9,10,11 * * *"
+    - cron: "0/5 9,10 * * *"
 
 jobs:
   report:
