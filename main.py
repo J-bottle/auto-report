@@ -115,7 +115,7 @@ if __name__ == "__main__":
             browser,
             opt.longitude,
             opt.latitude,
-            meta['el']['in_school_button'],
+            meta['el']['not_in_school_button'],
             meta['el']['location_button'],
             meta['el']['submit_button'],
             meta['el']['confirm_button'],
