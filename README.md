@@ -18,3 +18,6 @@ Reverse actions above.
 - 2022.10.18
 
   So I changed the 'cron' in report.yml, now it reports every five miniutes past 5:00 pm and 6:00pm, theoretically.
+
+## abortion
+- 2022.12.08 Due the policy, it's out...
